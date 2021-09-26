@@ -20,7 +20,7 @@ namespace Jquery_CRUD_MVC.Controllers
             try
             {
                 SqlParameter param = new SqlParameter("@name",name); 
-                SqlParameter param1 = new SqlParameter("@mobile",name);
+                SqlParameter param1 = new SqlParameter("@mobile",mobile);
                var data= db.Database.ExecuteSqlCommand("sp_AddTomain @name, @mobile",param,param1);         //data means no of affected rows
 
 
@@ -29,7 +29,7 @@ namespace Jquery_CRUD_MVC.Controllers
 
             }
 
-            catch
+            catch (Exception ex)
             {
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }

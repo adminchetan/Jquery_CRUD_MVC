@@ -87,13 +87,13 @@ input[type=submit]:hover {
 
     <div id="myModal" class="modal">
         <div class="modal-content" style="margin-top:11%;margin-left:25%;margin-right:25%;height:auto;  opacity: 0.999 ;">
-            <a id="span"><span class="close">&times;</span>  </a>
+         
 
             <div class="container-two">
                 
-                    <div class="row">
+                    
                         <h3 style="background-color:purple;color:#ffffff;padding:20px;">Please Enter Details</h3>
-                    </div> 
+                    
                 
                 
                 <div class="row">
@@ -112,7 +112,7 @@ input[type=submit]:hover {
                             <input type="text" id="mobile" name="mobile" placeholder="Your Mobile No">
                         </div>
                     </div>
-                    <div class="row">
+                    @*<div class="row">
                         <div class="col-25">
                             <label for="country">Country</label>
                         </div>
@@ -122,11 +122,12 @@ input[type=submit]:hover {
                                 <option value="canada">Canada</option>
                                 <option value="usa">USA</option>
                             </select>
-                        </div>*@
-                    </div>
+                        </div>
+                    </div>*@
                    
                     <div class="row">
-                        <input type="submit" value="Add To Main"  id="AddNewCall" >
+                        <input type="submit" value="Add To Main" id="AddNewCall">
+                        <button class="btn btn-info" id="close" value="Add New">Close</button>
                     </div>
               
             </div>
@@ -141,15 +142,25 @@ input[type=submit]:hover {
     // Get the button that opens the modal
     var btn = document.getElementById("myBtn");
     // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+    var span = document.getElementById("close");
 
-    // Get the button that SAvedata the modal
+
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+
     var btnAddNew = document.getElementById("AddNewCall");
     btnAddNew.onclick = function () {
 
         var name = $('#name').val();
         var mobile = $('#mobile').val();
-       alert(mobile);
+     
 
 
         $.ajax({
@@ -171,14 +182,7 @@ input[type=submit]:hover {
 
 
 
-    btn.onclick = function ()
-    {
-        modal.style.display = "block";
-    }
-    span.onclick = function ()
-    {
-        modal.style.display = "none";
-    }
+
 
 </script>
 
