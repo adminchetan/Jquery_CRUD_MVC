@@ -34,6 +34,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_AddTomain" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="varchar(max)" Mode="In" />
+          <Parameter Name="mobile" Type="varchar(max)" Mode="In" />
+        </Function>
         <Function Name="sp_GetAllEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="GitExamplesModelStoreContainer">
           <EntitySet Name="UserMaster" EntityType="Self.UserMaster" Schema="dbo" store:Type="Tables" />
@@ -86,6 +90,10 @@
             <End Role="UserMaster" EntitySet="UserMasters" />
           </AssociationSet>
           <FunctionImport Name="sp_GetAllEmployee" EntitySet="UserMasters" ReturnType="Collection(GitExamplesModel.UserMaster)" />
+          <FunctionImport Name="sp_AddTomain" EntitySet="UserMasters" ReturnType="Collection(GitExamplesModel.UserMaster)">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="mobile" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_GetAllEmployee_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -121,6 +129,7 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_GetAllEmployee" FunctionName="GitExamplesModel.Store.sp_GetAllEmployee">
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_AddTomain" FunctionName="GitExamplesModel.Store.sp_AddTomain" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

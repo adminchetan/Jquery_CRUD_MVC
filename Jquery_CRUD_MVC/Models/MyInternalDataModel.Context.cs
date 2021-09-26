@@ -39,5 +39,31 @@ namespace Jquery_CRUD_MVC.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserMaster>("sp_GetAllEmployee", mergeOption);
         }
+    
+        public virtual ObjectResult<UserMaster> sp_AddTomain(string name, string mobile)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var mobileParameter = mobile != null ?
+                new ObjectParameter("mobile", mobile) :
+                new ObjectParameter("mobile", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserMaster>("sp_AddTomain", nameParameter, mobileParameter);
+        }
+    
+        public virtual ObjectResult<UserMaster> sp_AddTomain(string name, string mobile, MergeOption mergeOption)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var mobileParameter = mobile != null ?
+                new ObjectParameter("mobile", mobile) :
+                new ObjectParameter("mobile", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserMaster>("sp_AddTomain", mergeOption, nameParameter, mobileParameter);
+        }
     }
 }
