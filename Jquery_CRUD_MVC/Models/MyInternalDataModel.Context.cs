@@ -65,5 +65,14 @@ namespace Jquery_CRUD_MVC.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserMaster>("sp_AddTomain", mergeOption, nameParameter, mobileParameter);
         }
+    
+        public virtual int sp_AlterDeactiveEmployee(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_AlterDeactiveEmployee", idParameter);
+        }
     }
 }

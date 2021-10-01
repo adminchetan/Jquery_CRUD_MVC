@@ -112,19 +112,7 @@ input[type=submit]:hover {
                             <input type="text" id="mobile" name="mobile" placeholder="Your Mobile No">
                         </div>
                     </div>
-                    @*<div class="row">
-                        <div class="col-25">
-                            <label for="country">Country</label>
-                        </div>
-                        @*<div class="col-75">
-                            <select id="country" name="country">
-                                <option value="australia">Australia</option>
-                                <option value="canada">Canada</option>
-                                <option value="usa">USA</option>
-                            </select>
-                        </div>
-                    </div>*@
-                   
+                    
                     <div class="row">
                         <input type="submit" value="Add To Main" id="AddNewCall">
                         <button class="btn btn-info" id="close" value="Add New">Close</button>
@@ -143,41 +131,26 @@ input[type=submit]:hover {
     var btn = document.getElementById("myBtn");
     // Get the <span> element that closes the modal
     var span = document.getElementById("close");
-
-
-    btn.onclick = function () {
+     btn.onclick = function () {
         modal.style.display = "block";
     }
-
-
-    span.onclick = function () {
+     span.onclick = function () {
         modal.style.display = "none";
     }
-
-
-    var btnAddNew = document.getElementById("AddNewCall");
-    btnAddNew.onclick = function () {
-
+        var btnAddNew = document.getElementById("AddNewCall");
+        btnAddNew.onclick = function () {
         var name = $('#name').val();
         var mobile = $('#mobile').val();
-     
-
-
         $.ajax({
-            url: "ajax/addDataToMain",
+            url: "/ajax/addDataToMain",
             type: "POST",
             data: { name: name, mobile: mobile },
             success: function (data)
             {
                 updatetable();
             }
-
-         
+               
         })
-
-
-
-
     }
 
 
@@ -185,20 +158,17 @@ input[type=submit]:hover {
 
 
 </script>
-
-
 <div class="container" style="margin-top:3%">
-
-
     <table id="ShowDetail" class="table table-hover">
         <thead style="background-color:red;color:#ffffff;">
             <tr>
                 <th>#Uid</th>
                 <th>Mobile No</th>
                 <th>Name</th>
+                <th>ISActive</th>
+                <th>Role</th>
                 <th>Edit</th>
-                <th>Disable</th>
-
+                <th>Enable / Disable</th>
             </tr>
         </thead>
         <tbody id="ShowDetailbody"></tbody>
@@ -207,16 +177,11 @@ input[type=submit]:hover {
 </div>
 
 <script> 
-
-
-    $(document).ready(function ()
+   $(document).ready(function ()
     {
         updatetable();
     })
-
-
-
-    function updatetable() {
+   function updatetable() {
         var txt = "";
         $("#ShowDetailbody").html(txt);
         $.ajax({
@@ -225,24 +190,60 @@ input[type=submit]:hover {
             dataType: "JSON",
             //data: { userName: userAlias.value }, //Use the value property here
             success: function (data) {
-
+              console.log(data);
+               data = JSON.parse(data);
                 console.log(data);
-
-                data = JSON.parse(data);
-                console.log(data);
-
+                var idtype = "";
                 $.each(data, function (i, databind) {
                     txt += "<tr><td>" + databind.Uid + "</td>";
                     txt += "<td>" + databind.mobileNo + "</td>";
                     txt += "<td>" + databind.Name + "</td>";
+                    txt += "<td>" + databind.active + "</td>";
+                    txt += "<td>" + databind.role + "</td>";
                     txt += "<td><a href=" + databind.Uid + ">Update</a></td>";
-                    txt += "<td><a href=" + databind.Uid + ">Disable</a></td></tr>";
+                    txt += "<td>"; if (databind.active == false) { txt += "<a href='#' id=" + databind.Uid + " class='enable' style='color:red;'>Do Enable &#x2718; </a>"; } else { txt += "<a href = '#' id = " + databind.Uid + " class='disable' style = 'color:green;'> Do Disable &#x2714;</a>"; };
+                    "</td></tr> ";
                 });
 
                 $("#ShowDetailbody").html(txt); //Move code to set text here
             }
         });
 
+
+        $(document).on("click", ".disable", function ()
+        {
+            var Id = $(this).attr('id'); 
+          
+
+            $.ajax({
+                url: "/ajax/disable",
+                type: "POST",
+                data: { id: Id,},
+                success: function (data) {
+                    updatetable();
+                }
+
+            })
+
+        });
+
+
+        $(document).on("click", ".enable", function ()
+        {
+            var Id = $(this).attr('id'); 
+          
+
+            $.ajax({
+                url: "/ajax/enable",
+                type: "POST",
+                data: { id: Id,},
+                success: function (data) {
+                    updatetable();
+                }
+
+            })
+
+        });
 
     }
 </script>

@@ -36,6 +36,48 @@ namespace Jquery_CRUD_MVC.Controllers
            
         }
 
+        public JsonResult disable(int id)
+        {
+            try
+            {
+                SqlParameter param = new SqlParameter("@id", id);
+              
+                var data = db.Database.ExecuteSqlCommand("sp_AlterDeactiveEmployee @id", param);         //data means no of affected rows
+
+                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+
+
+            }
+
+            catch (Exception ex)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+
+        public JsonResult enable(int id)
+        {
+            try
+            {
+                SqlParameter param = new SqlParameter("@id", id);
+              
+                var data = db.Database.ExecuteSqlCommand("sp_AlterEnableEmployee @id", param);         //data means no of affected rows
+
+                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+
+
+            }
+
+            catch (Exception ex)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+
         public ActionResult GetRecords()
         {          
             try
@@ -48,7 +90,8 @@ namespace Jquery_CRUD_MVC.Controllers
                                 mobileNo = obj.MobileNo,
                                 Name = obj.UserName,
                                 Designation = obj.UserRole,
-
+                                active =obj.IsActive,
+                                role=obj.UserRole               
                             });
 
                 var Jsonserialdata = JsonConvert.SerializeObject(data);
